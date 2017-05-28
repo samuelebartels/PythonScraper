@@ -2,12 +2,21 @@
 #Scraper.py - Lanunches map in browser using address from the command line
 
 import webbrowser, sys, pyperclip
+import urllib2
+from bs4 import BeautifulSoup
 
+def display_html( html ):
+    print html
+    return;
+
+UB2 = urllib2
 if len(sys.argv) > 1:
     address = ' '.join(sys.argv[1:])
 else:
     address = pyperclip.paste()
 
-#TODO: Get address from clipboard
+page = UB2.urlopen(address).read()
+soup = BeautifulSoup(page)
+pretty_soup = soup.prettify()
 
-webbrowser.open('https://www.google.com/maps/place/' + address)
+display_html(pretty_soup)
